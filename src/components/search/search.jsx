@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Checkbox from "../checkbox";
+import Selector from "../selector";
 import "./search.css";
 
 class Search extends Component {
@@ -30,17 +32,30 @@ class Search extends Component {
             { (extraVisible ? "Скрыть" : "Показать всё") }
           </a>
           <div className={"search__extra " + (extraVisible ? "" : "none")}>
-            <p className="search__extra text text">Выберите год:</p>
-
-            <input id="search__checkbox0" type="checkbox" className="search__checkbox" value="2015"/>
-            <label htmlFor="search__checkbox0" className="search__checkbox-label text">2015</label>
-            <input id="search__checkbox1" type="checkbox" className="search__checkbox" value="2016"/>
-            <label htmlFor="search__checkbox1" className="search__checkbox-label text">2015</label>
-            <input id="search__checkbox2" type="checkbox" className="search__checkbox"/>
-            <label htmlFor="search__checkbox2" className="search__checkbox-label text">2016</label>
-            <input id="search__checkbox3" type="checkbox" className="search__checkbox" value="2017"/>
-            <label htmlFor="search__checkbox3" className="search__checkbox-label text">2017</label>
-
+            <p className="search__extra text">Выберите год:</p>
+            <div className="search__checkboxes">
+              <Checkbox id="checkbox-1" value="Все" title="Все" />
+              <Checkbox id="checkbox-2" value="2015" title="2015" />
+              <Checkbox id="checkbox-3" value="2016" title="2016" />
+              <Checkbox id="checkbox-4" value="2017" title="2017" />
+            </div>
+            <p className="search__extra text">Класификации:</p>
+              <Selector placeholder="Выберите жанр"
+                options={[
+                    {
+                        value: 'Новинка',
+                        label: 'Новинка'
+                    },
+                    {
+                        value: 'Художественная литература',
+                        label: 'Художественная литература'
+                    },
+                    {
+                        value: 'Детская литература',
+                        label: 'Детская литература'
+                    }
+                ]}
+            />
           </div>
         </form>
       </div>

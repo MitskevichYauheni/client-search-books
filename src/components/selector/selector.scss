@@ -1,0 +1,15 @@
+.new-selector {
+  .Select-placeholder {
+    color: #00CC00;
+  }
+
+  .is-focused{
+      &:not(.is-open) {
+        .Select-control {
+          border: solid 1px #ddd;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}

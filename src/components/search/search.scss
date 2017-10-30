@@ -67,17 +67,10 @@
 
   &__extra {
     width: 100%;
+    color: #00CC00;
   }
 
-  &__extra-text {
-    margin-bottom: 1rem;
-  }
-
-  &__checkbox {
-    margin-right: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  &__checkbox-label {
-    margin-right: 1.5rem;
+  &__checkboxes {
+    display: flex;
   }
 }
