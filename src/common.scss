@@ -1,0 +1,74 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+
+  @media (min-width: 1910px) {
+    font-size: 19px;
+  }
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #f4f4f4;
+}
+
+a {
+  text-decoration: none;
+  outline: 0;
+  cursor: pointer;
+  transition: 0.4s;
+
+  div, p, span {
+    transition: 0.4s;
+  }
+}
+
+button, input, textarea, select {
+  outline: 0;
+  transition: 0.4s;
+  font-family: 'Open Sans';
+
+  div, p, span {
+    transition: 0.4s;
+  }
+}
+
+button {
+  cursor: pointer;
+}
+
+svg {
+  transition: 0.4s;
+}
+
+.none {
+  display: none;
+}
+
+
+
+.main {
+  max-width: 68.75rem;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2.125rem;
+  line-height: 1.2;
+  color: #333;
+}
+.second-title {
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: #333;
+}
+.text {
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #333;
+}
