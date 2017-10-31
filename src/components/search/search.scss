@@ -2,7 +2,7 @@
   margin: 6.5rem 0 0;
   &__form {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
   }
 
   &__form-main {
@@ -54,8 +54,13 @@
     }
   }
 
+  &__extra-btns {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   &__extra-btn {
-    margin-left: auto;
+    margin-right: 1.5rem;
     margin-bottom: 0.75rem;
     color: #00CC00;
 
@@ -63,11 +68,26 @@
       text-decoration: underline;
       color: #269926;
     }
+
+    &:last-of-type {
+      margin-right: 0;
+    }
   }
 
   &__extra {
     width: 100%;
-    color: #00CC00;
+  }
+
+  &__extra-text {
+    margin-bottom: 1rem;
+  }
+
+  &__checkbox {
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+  &__checkbox-label {
+    margin-right: 1.5rem;
   }
 
   &__checkboxes {

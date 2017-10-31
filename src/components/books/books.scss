@@ -1,0 +1,23 @@
+.books {
+  padding-top: 4rem;
+  &__row {
+    display: flex;
+    margin-bottom: 1.5rem;
+
+    &:first-of-type {
+      border-bottom: 1px solid #999;
+    }
+  }
+
+  &__name {
+    width: 56%;
+  }
+
+  &__autor {
+    width: 37%;
+  }
+
+  &__year {
+    width: 7%;
+  }
+}

@@ -1,21 +1,44 @@
 import React, { Component } from "react";
 import Checkbox from "../checkbox";
 import Selector from "../selector";
+import Books from '../books';
 import "./search.css";
 
 class Search extends Component {
   constructor(){
     super();
     this.state = {
-      extraVisible: false
+      extraVisible: false,
+      allBooksVisible: false,
+      allBooks: []
     }
     this.onCheckRuleClick = this.onCheckRuleClick.bind(this);
+    this.onShowBooks = this.onShowBooks.bind(this);
   }
   onCheckRuleClick(e) {
     this.setState({extraVisible: !this.state.extraVisible});
   }
+  onShowBooks(e) {
+    this.server();
+    this.setState({allBooksVisible: !this.state.allBooksVisible});
+  }
+  server(){
+    fetch('http://localhost:8080/all-books', {
+      method: 'post',
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
+    .then(response => response.ok ? response.json() : console.error('Error while fetching deficit'))
+    .then(authResult => {
+        this.setState({allBooks: authResult.allBooks});
+        // console.log(authResult.allBooks)
+      })
+  }
   render() {
-    let extraVisible = this.state.extraVisible;
+    let extraVisible = this.state.extraVisible,
+        allBooksVisible = this.state.allBooksVisible,
+        allBooks = this.state.allBooks;
 
     return (
       <div className="search">
@@ -28,9 +51,15 @@ class Search extends Component {
               </svg>
             </button>
           </div>
-          <a onClick={this.onCheckRuleClick} className="search__extra-btn" >
-            { (extraVisible ? "Скрыть" : "Показать всё") }
-          </a>
+          <div className="search__extra-btns">
+            <a onClick={this.onShowBooks} className="search__extra-btn" >
+              { (allBooksVisible ? "Скрыть Книги" : "Показать всё книги") }
+            </a>
+            <a onClick={this.onCheckRuleClick} className="search__extra-btn" >
+              { (extraVisible ? "Скрыть параметры" : "Показать все параметры") }
+            </a>
+          </div>
+
           <div className={"search__extra " + (extraVisible ? "" : "none")}>
             <p className="search__extra text">Выберите год:</p>
             <div className="search__checkboxes">
@@ -39,7 +68,7 @@ class Search extends Component {
               <Checkbox id="checkbox-3" value="2016" title="2016" />
               <Checkbox id="checkbox-4" value="2017" title="2017" />
             </div>
-            <p className="search__extra text">Класификации:</p>
+            {/*<p className="search__extra text">Класификации:</p>
               <Selector placeholder="Выберите жанр"
                 options={[
                     {
@@ -55,9 +84,12 @@ class Search extends Component {
                         label: 'Детская литература'
                     }
                 ]}
-            />
+            /> */}
           </div>
         </form>
+
+        {(allBooksVisible) ? <Books data={allBooks} /> : '' }
+
       </div>
     );
   }

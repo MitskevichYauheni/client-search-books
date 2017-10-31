@@ -5,9 +5,10 @@
 
 html {
   font-size: 16px; }
-  @media (min-width: 1910px) {
-    html {
-      font-size: 19px; } }
+
+@media (min-width: 1910px) {
+  html {
+    font-size: 19px; } }
 
 body {
   font-family: 'Open Sans', sans-serif;
@@ -18,15 +19,17 @@ a {
   outline: 0;
   cursor: pointer;
   transition: 0.4s; }
-  a div, a p, a span {
-    transition: 0.4s; }
+
+a div, a p, a span {
+  transition: 0.4s; }
 
 button, input, textarea, select {
   outline: 0;
   transition: 0.4s;
   font-family: 'Open Sans'; }
-  button div, button p, button span, input div, input p, input span, textarea div, textarea p, textarea span, select div, select p, select span {
-    transition: 0.4s; }
+
+button div, button p, button span, input div, input p, input span, textarea div, textarea p, textarea span, select div, select p, select span {
+  transition: 0.4s; }
 
 button {
   cursor: pointer; }
