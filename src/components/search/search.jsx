@@ -14,20 +14,43 @@ class Search extends Component {
     }
     this.onCheckRuleClick = this.onCheckRuleClick.bind(this);
     this.onShowBooks = this.onShowBooks.bind(this);
+    this.onBtnSearchBook = this.onBtnSearchBook.bind(this);
   }
-  onCheckRuleClick(e) {
+  onCheckRuleClick() {
     this.setState({extraVisible: !this.state.extraVisible});
   }
-  onShowBooks(e) {
-    this.server();
+  onShowBooks() {
+    this.allBookServer();
     this.setState({allBooksVisible: !this.state.allBooksVisible});
   }
-  server(){
+  onBtnSearchBook(event) {
+    event.preventDefault();
+    this.setState({allBooks: []});
+    this.searchBookServer();
+    this.setState({allBooksVisible: true});
+  }
+  allBookServer(){
     fetch('http://localhost:8080/all-books', {
       method: 'post',
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       }
+    })
+    .then(response => response.ok ? response.json() : console.error('Error while fetching deficit'))
+    .then(authResult => {
+        this.setState({allBooks: authResult.allBooks});
+        // console.log(authResult.allBooks)
+      })
+  }
+  searchBookServer(){
+    fetch('http://localhost:8080/search-books', {
+      method: 'post',
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      },
+      body: JSON.stringify({
+        message: (this.refs.message).value
+      })
     })
     .then(response => response.ok ? response.json() : console.error('Error while fetching deficit'))
     .then(authResult => {
@@ -44,8 +67,8 @@ class Search extends Component {
       <div className="search">
         <form action="" className="search__form">
           <div className="search__form-main">
-            <input type="text" className="search__input"/>
-            <button className="search__btn">
+            <input type="text" className="search__input" ref="message" />
+            <button className="search__btn" onClick={this.onBtnSearchBook}>
               <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16">
                 <path fillRule="evenodd" d="M16.17 15.608c-.127.127-.292.191-.458.191-.166 0-.332-.064-.458-.191l-4.99-5.009c-.998.8-2.245 1.3-3.618 1.3-3.214 0-5.828-2.624-5.828-5.85 0-3.226 2.614-5.85 5.828-5.85 3.213 0 5.828 2.624 5.828 5.85 0 1.378-.497 2.63-1.295 3.631l4.991 5.009c.253.254.253.666 0 .919zM6.646 1.499c-2.499 0-4.533 2.041-4.533 4.55s2.034 4.55 4.533 4.55c2.499 0 4.533-2.041 4.533-4.55s-2.034-4.55-4.533-4.55z"/>
               </svg>
@@ -61,7 +84,7 @@ class Search extends Component {
           </div>
 
           <div className={"search__extra " + (extraVisible ? "" : "none")}>
-            <p className="search__extra text">Выберите год:</p>
+            <p className="search__extra-text text">Выберите год:</p>
             <div className="search__checkboxes">
               <Checkbox id="checkbox-1" value="Все" title="Все" />
               <Checkbox id="checkbox-2" value="2015" title="2015" />

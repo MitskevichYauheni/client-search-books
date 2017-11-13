@@ -1,5 +1,5 @@
 .search {
-  margin: 6.5rem 0 0;
+  margin: 6.5rem 0 3rem;
   &__form {
     display: flex;
     flex-direction: column;
@@ -76,6 +76,7 @@
 
   &__extra {
     width: 100%;
+    margin-bottom: 0.5rem;
   }
 
   &__extra-text {

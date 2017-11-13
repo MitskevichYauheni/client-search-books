@@ -2,22 +2,39 @@
   padding-top: 4rem;
   &__row {
     display: flex;
-    margin-bottom: 1.5rem;
+    flex-direction: column;
+    padding: 0.625rem 0 0.5rem 0.625rem;
+    border: 1px solid #999;
+    border-bottom: 0;
 
-    &:first-of-type {
+    &:last-of-type {
       border-bottom: 1px solid #999;
     }
   }
+
+  &__title {
+    display: flex;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  // &__discription {
+  //   display: flex;
+  // }
 
   &__name {
     width: 56%;
   }
 
-  &__autor {
+  &__author {
     width: 37%;
   }
 
   &__year {
     width: 7%;
+  }
+
+  &__description {
+    padding: 1rem 1.75rem 0.5rem 0;
   }
 }

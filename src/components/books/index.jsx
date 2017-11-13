@@ -6,27 +6,21 @@ import "./books.css";
 class Books extends Component {
 
   render() {
-    let data = this.props.data,
-        allBooks;
-
-    if (data.length > 0) {
-      allBooks = data.map(function(item, index) {
-        return (
-          <Book data={item} key={index}/>
-        )
-      })
-    } else {
-      allBooks = <p className="text">Список книг пуст</p>
-    }
+    const data = this.props.data;
 
     return(
       <div className='books'>
         <div className="books__row">
-          <p className="books__name text">Название</p>
-          <p className="books__autor text">Автор</p>
-          <p className="books__year text">Год</p>
+          <div className="books__title">
+            <p className="books__name text">Название</p>
+            <p className="books__author text">Автор</p>
+            <p className="books__year text">Год</p>
+          </div>
         </div>
-        {allBooks}
+        {data.length > 0 &&
+           data.map((item, i) => <Book data={item} key={`book-${i}`}/>)
+        }
+        {data.length === 0 && <p className="text">Список книг пуст</p> }
       </div>
     )
   }

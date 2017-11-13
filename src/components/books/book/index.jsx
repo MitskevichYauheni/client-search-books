@@ -3,18 +3,41 @@ import PropTypes from 'prop-types';
 
 class Book extends Component {
 
-  render() {
-    let name = this.props.data.name,
-        autor = this.props.data.autor,
-        year = this.props.data.year;
+  constructor(){
+    super();
+    this.state = {
+      bookVisible: false,
+    }
+    this.onBookClick = this.onBookClick.bind(this);
+  }
 
-        console.log(this.props.data)
+  onBookClick() {
+    this.setState({bookVisible: !this.state.bookVisible});
+  }
+
+  render() {
+    let bookVisible = this.state.bookVisible;
+    const { name, author, year, description } = this.props.data;
+
+        // console.log(this.props.data)
 
     return(
-      <div className="books__row">
-        <p className="books__name text">{name}</p>
-        <p className="books__autor text">{autor}</p>
-        <p className="books__year text">{year}</p>
+      <div onClick={this.onBookClick} className="books__row">
+        <div className="books__title">
+          <p className="books__name text">{name}</p>
+          <p className="books__author text">{author}</p>
+          <p className="books__year text">{year}</p>
+        </div>
+        {
+          bookVisible ?
+            <div className="books__description">
+              <p className="books__info text">
+                {description}
+              </p>
+            </div>
+           :
+            " "
+        }
       </div>
     )
   }
@@ -23,8 +46,9 @@ class Book extends Component {
 Book.propTypes = {
   data: PropTypes.shape({
     name: PropTypes.string,
-    autor: PropTypes.string,
-    year: PropTypes.number
+    author: PropTypes.string,
+    year: PropTypes.number,
+    description: PropTypes.string
   })
 }
 
