@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import Book from './book';
+import NotFound from './notFound';
 import "./books.css";
 
 class Books extends Component {
@@ -20,7 +21,7 @@ class Books extends Component {
         {data.length > 0 &&
            data.map((item, i) => <Book data={item} key={`book-${i}`}/>)
         }
-        {data.length === 0 && <p className="text">Список книг пуст</p> }
+        {data.length === 0 && <NotFound /> }
       </div>
     )
   }

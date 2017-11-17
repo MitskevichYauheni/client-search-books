@@ -5,9 +5,7 @@ import "./selector.css";
 import 'react-select/dist/react-select.css';
 
 export default class Selector extends Component {
-
     render() {
-
         const { options, placeholder} = this.props;
 
         return (

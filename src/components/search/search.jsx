@@ -20,18 +20,17 @@ class Search extends Component {
     this.setState({extraVisible: !this.state.extraVisible});
   }
   onShowBooks() {
-    this.allBookServer();
+    !this.state.allBooksVisible && this.allBookServer();
     this.setState({allBooksVisible: !this.state.allBooksVisible});
   }
   onBtnSearchBook(event) {
     event.preventDefault();
-    this.setState({allBooks: []});
     this.searchBookServer();
     this.setState({allBooksVisible: true});
   }
   allBookServer(){
     fetch('http://localhost:8080/all-books', {
-      method: 'post',
+      method: 'get',
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       }

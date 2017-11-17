@@ -29,14 +29,12 @@ class Book extends Component {
           <p className="books__year text">{year}</p>
         </div>
         {
-          bookVisible ?
+          bookVisible &&
             <div className="books__description">
               <p className="books__info text">
                 {description}
               </p>
             </div>
-           :
-            " "
         }
       </div>
     )
