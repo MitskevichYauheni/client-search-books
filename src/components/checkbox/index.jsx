@@ -4,10 +4,10 @@ import "./checkbox.css";
 
 class Checkbox extends Component {
   render() {
-    let id = this.props.id,
-        value = this.props.value,
-        title = this.props.title,
-        checked = this.props.checked;
+    const id = this.props.id,
+          value = this.props.value,
+          title = this.props.title,
+          checked = this.props.checked;
 
     return(
       <div className="checkbox">

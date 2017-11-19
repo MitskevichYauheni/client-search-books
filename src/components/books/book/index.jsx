@@ -45,7 +45,7 @@ Book.propTypes = {
   data: PropTypes.shape({
     name: PropTypes.string,
     author: PropTypes.string,
-    year: PropTypes.number,
+    year: PropTypes.string,
     description: PropTypes.string
   })
 }

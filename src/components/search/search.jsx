@@ -16,7 +16,8 @@ class Search extends Component {
         { year: '2013', checked: false},
         { year: '2014', checked: false},
         { year: '2015', checked: false},
-        { year: '2016', checked: false}
+        { year: '2016', checked: false},
+        { year: '2017', checked: false}
       ],
       allBooks: []
     }
@@ -38,7 +39,9 @@ class Search extends Component {
         years.push({year: item.year, checked: event.target.checked}) :
         years.push(item)
     })
+
     this.setState({years: years});
+    this.changeSearch();
   }
   messageChange(event) {
     event.preventDefault();
@@ -72,13 +75,19 @@ class Search extends Component {
       })
   }
   searchBookServer(){
+    let years = [];
+    this.state.years.map((item, i) => {
+      (item.checked === true) && years.push({year: item.year})
+    })
+
     fetch('http://localhost:8080/api/v1/search-books', {
       method: 'post',
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       },
       body: JSON.stringify({
-        message: this.state.message
+        message: this.state.message,
+        years: years
       })
     })
     .then(response => response.ok ? response.json() : console.error('Error while fetching deficit'))
