@@ -78,8 +78,17 @@
   }
 
   &__extra {
+    display: flex;
     width: 100%;
     margin-bottom: 0.5rem;
+  }
+
+  &__extra-col {
+    margin-right: 3rem;
+
+    &:nth-of-type(2n) {
+      margin-right: 0;
+    }
   }
 
   &__extra-text {
@@ -96,5 +105,7 @@
 
   &__checkboxes {
     display: flex;
+    align-items: center;
+    height: 3.125rem;
   }
 }

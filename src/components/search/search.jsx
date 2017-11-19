@@ -12,13 +12,24 @@ class Search extends Component {
       allBooksVisible: false,
       message: '',
       years: [
-        { year: '2012', checked: false},
-        { year: '2013', checked: false},
-        { year: '2014', checked: false},
-        { year: '2015', checked: false},
-        { year: '2016', checked: false},
-        { year: '2017', checked: false}
+        { year: '2012', checked: false },
+        { year: '2013', checked: false },
+        { year: '2014', checked: false },
+        { year: '2015', checked: false },
+        { year: '2016', checked: false },
+        { year: '2017', checked: false }
       ],
+      options: [
+        { author: 'Стивен Кинг'},
+        { author: 'Генри Марш' },
+        { author: 'Генри Форд' },
+        { author: 'Владимир Познер' },
+        { author: 'Ричард Докинз' },
+        { author: 'Олег Фейгин' },
+        { author: 'Стивен Хокинг' },
+        { author: 'Питер Акройд' }
+      ],
+      valueSelect: 'Выберете автора...',
       allBooks: []
     }
     this.messageChange = this.messageChange.bind(this);
@@ -27,6 +38,7 @@ class Search extends Component {
     this.onBtnSearchBook = this.onBtnSearchBook.bind(this);
     this.changeSearch = this.changeSearch.bind(this);
     this.handleCheckedChange = this.handleCheckedChange.bind(this);
+    this.handleChangeSelect = this.handleChangeSelect.bind(this);
   }
   onCheckRuleClick() {
     this.setState({extraVisible: !this.state.extraVisible});
@@ -43,12 +55,17 @@ class Search extends Component {
     this.setState({years: years});
     this.changeSearch();
   }
+  handleChangeSelect(event) {
+    this.setState({valueSelect: event.target.value});
+    this.changeSearch();
+  }
   messageChange(event) {
     event.preventDefault();
     this.setState({message: event.target.value});
   }
   changeSearch() {
-    setTimeout(() => {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
       this.searchBookServer()
       this.setState({allBooksVisible: true});
     }, 1500);
@@ -87,13 +104,13 @@ class Search extends Component {
       },
       body: JSON.stringify({
         message: this.state.message,
-        years: years
+        years: years,
+        author: this.state.valueSelect
       })
     })
     .then(response => response.ok ? response.json() : console.error('Error while fetching deficit'))
     .then(authResult => {
         this.setState({allBooks: authResult.allBooks});
-        // console.log(authResult.allBooks)
       })
   }
   componentDidMount() {
@@ -104,7 +121,9 @@ class Search extends Component {
         allBooksVisible = this.state.allBooksVisible,
         message = this.state.message,
         allBooks = this.state.allBooks,
-        years = this.state.years;
+        years = this.state.years,
+        options = this.state.options,
+        valueSelect = this.state.valueSelect;
 
         console.log(allBooks);
 
@@ -129,29 +148,20 @@ class Search extends Component {
           </div>
 
           <div className={"search__extra " + (extraVisible ? "" : "none")}>
-            <p className="search__extra-text text">Выберите год:</p>
-            <div className="search__checkboxes">
-              {years.length > 0 &&
-                 years.map((item, i) => <Checkbox id={`checkbox-${i}`} value={item.year} title={item.year} onChange={this.handleCheckedChange} checked={item.checked} key={`book-${i}`}/> )
-              }
+            <div className="search__extra-col">
+              <p className="search__extra-text text">Выберите автора:</p>
+                {options.length > 0 &&
+                  <Selector options={options} valueSelect={valueSelect} onChange={this.handleChangeSelect} />
+                }
             </div>
-            {/*<p className="search__extra text">Класификации:</p>
-              <Selector placeholder="Выберите жанр"
-                options={[
-                    {
-                        value: 'Новинка',
-                        label: 'Новинка'
-                    },
-                    {
-                        value: 'Художественная литература',
-                        label: 'Художественная литература'
-                    },
-                    {
-                        value: 'Детская литература',
-                        label: 'Детская литература'
-                    }
-                ]}
-            /> */}
+            <div className="search__extra-col">
+              <p className="search__extra-text text">Выберите год:</p>
+              <div className="search__checkboxes">
+                {years.length > 0 &&
+                   years.map((item, i) => <Checkbox id={`checkbox-${i}`} value={item.year} title={item.year} onChange={this.handleCheckedChange} checked={item.checked} key={`book-${i}`}/> )
+                }
+              </div>
+            </div>
           </div>
         </form>
 

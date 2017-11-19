@@ -1,14 +1,41 @@
-.new-selector {
-  .Select-placeholder {
-    color: #00CC00;
+.search {
+
+  &__select {
+    position: relative;
+    appearance: none;
+    border: 1px solid #00CC00;
+    border-radius: 0.25rem;
+    font-size: 1.125rem;
+    width: 17.5rem;
+    height: 3.125rem;
+    padding: 0 1rem 0 1rem;
+    outline: 0;
+    cursor: pointer;
+
+    &::-ms-expand {
+      display: none;
+    }
   }
 
-  .is-focused{
-      &:not(.is-open) {
-        .Select-control {
-          border: solid 1px #ddd;
-          box-shadow: none;
-        }
-      }
+  &__label-select {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      border: 0.25rem solid transparent;
+      border-top: 0.25rem solid #00CC00;
+      top: 0.75rem;
+      right: 1rem;
+      z-index: 1;
     }
+    &::before {
+      content: "";
+      position: absolute;
+      border: 0.25rem solid transparent;
+      border-bottom: 0.25rem solid #00CC00;
+      top: 0px;
+      right: 1rem;
+      z-index: 1;
+    }
+  }
 }
