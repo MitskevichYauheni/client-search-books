@@ -15,6 +15,10 @@
     &::-ms-expand {
       display: none;
     }
+
+    &:hover, &:focus {
+      border-color: #269926;
+    }
   }
 
   &__label-select {
