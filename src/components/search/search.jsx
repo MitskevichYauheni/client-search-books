@@ -10,14 +10,45 @@ class Search extends Component {
     this.state = {
       extraVisible: false,
       allBooksVisible: false,
+      message: '',
+      years: [
+        { year: '2012', checked: false},
+        { year: '2013', checked: false},
+        { year: '2014', checked: false},
+        { year: '2015', checked: false},
+        { year: '2016', checked: false}
+      ],
       allBooks: []
     }
+    this.messageChange = this.messageChange.bind(this);
     this.onCheckRuleClick = this.onCheckRuleClick.bind(this);
     this.onShowBooks = this.onShowBooks.bind(this);
     this.onBtnSearchBook = this.onBtnSearchBook.bind(this);
+    this.changeSearch = this.changeSearch.bind(this);
+    this.handleCheckedChange = this.handleCheckedChange.bind(this);
   }
   onCheckRuleClick() {
     this.setState({extraVisible: !this.state.extraVisible});
+  }
+  handleCheckedChange(event){
+    let years = [];
+
+    this.state.years.map((item, i) => {
+      (item.year === event.target.value) ?
+        years.push({year: item.year, checked: event.target.checked}) :
+        years.push(item)
+    })
+    this.setState({years: years});
+  }
+  messageChange(event) {
+    event.preventDefault();
+    this.setState({message: event.target.value});
+  }
+  changeSearch() {
+    setTimeout(() => {
+      this.searchBookServer()
+      this.setState({allBooksVisible: true});
+    }, 1500);
   }
   onShowBooks() {
     !this.state.allBooksVisible && this.allBookServer();
@@ -29,7 +60,7 @@ class Search extends Component {
     this.setState({allBooksVisible: true});
   }
   allBookServer(){
-    fetch('http://localhost:8080/all-books', {
+    fetch('http://localhost:8080/api/v1/all-books', {
       method: 'get',
       headers: {
         "Content-type": "application/json; charset=UTF-8"
@@ -38,17 +69,16 @@ class Search extends Component {
     .then(response => response.ok ? response.json() : console.error('Error while fetching deficit'))
     .then(authResult => {
         this.setState({allBooks: authResult.allBooks});
-        // console.log(authResult.allBooks)
       })
   }
   searchBookServer(){
-    fetch('http://localhost:8080/search-books', {
+    fetch('http://localhost:8080/api/v1/search-books', {
       method: 'post',
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       },
       body: JSON.stringify({
-        message: (this.refs.message).value
+        message: this.state.message
       })
     })
     .then(response => response.ok ? response.json() : console.error('Error while fetching deficit'))
@@ -57,17 +87,24 @@ class Search extends Component {
         // console.log(authResult.allBooks)
       })
   }
+  componentDidMount() {
+    (this.refs.message).focus();
+  }
   render() {
     let extraVisible = this.state.extraVisible,
         allBooksVisible = this.state.allBooksVisible,
-        allBooks = this.state.allBooks;
+        message = this.state.message,
+        allBooks = this.state.allBooks,
+        years = this.state.years;
+
+        console.log(allBooks);
 
     return (
       <div className="search">
-        <form action="" className="search__form">
+        <form className="search__form" onSubmit={this.onBtnSearchBook}>
           <div className="search__form-main">
-            <input type="text" className="search__input" ref="message" />
-            <button className="search__btn" onClick={this.onBtnSearchBook}>
+            <input type="text" className="search__input" ref="message" value={message} onChange={this.messageChange} onKeyUp={this.changeSearch} />
+            <button className="search__btn">
               <svg xmlns="http://www.w3.org/2000/svg" width="17" height="16">
                 <path fillRule="evenodd" d="M16.17 15.608c-.127.127-.292.191-.458.191-.166 0-.332-.064-.458-.191l-4.99-5.009c-.998.8-2.245 1.3-3.618 1.3-3.214 0-5.828-2.624-5.828-5.85 0-3.226 2.614-5.85 5.828-5.85 3.213 0 5.828 2.624 5.828 5.85 0 1.378-.497 2.63-1.295 3.631l4.991 5.009c.253.254.253.666 0 .919zM6.646 1.499c-2.499 0-4.533 2.041-4.533 4.55s2.034 4.55 4.533 4.55c2.499 0 4.533-2.041 4.533-4.55s-2.034-4.55-4.533-4.55z"/>
               </svg>
@@ -85,10 +122,9 @@ class Search extends Component {
           <div className={"search__extra " + (extraVisible ? "" : "none")}>
             <p className="search__extra-text text">Выберите год:</p>
             <div className="search__checkboxes">
-              <Checkbox id="checkbox-1" value="Все" title="Все" />
-              <Checkbox id="checkbox-2" value="2015" title="2015" />
-              <Checkbox id="checkbox-3" value="2016" title="2016" />
-              <Checkbox id="checkbox-4" value="2017" title="2017" />
+              {years.length > 0 &&
+                 years.map((item, i) => <Checkbox id={`checkbox-${i}`} value={item.year} title={item.year} onChange={this.handleCheckedChange} checked={item.checked} key={`book-${i}`}/> )
+              }
             </div>
             {/*<p className="search__extra text">Класификации:</p>
               <Selector placeholder="Выберите жанр"
@@ -110,7 +146,7 @@ class Search extends Component {
           </div>
         </form>
 
-        {(allBooksVisible) ? <Books data={allBooks} /> : '' }
+        {(allBooksVisible) && <Books data={allBooks} />}
 
       </div>
     );

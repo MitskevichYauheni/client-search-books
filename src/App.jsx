@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Search from './components/search/search.jsx';
 import './common.css';
+import Search from './components/search/search.jsx';
 
 class App extends Component {
   render() {
